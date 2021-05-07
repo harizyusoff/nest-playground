@@ -1,27 +1,44 @@
 import { Controller, Get, HttpCode, HttpStatus, Header, Post, Redirect, Query, Param, Body, Put, Delete } from '@nestjs/common';
-import { UserDto } from './user.dto';
+import { UserDto } from '../user.dto';
+import { UsersService } from '../service/users.service';
+import { User } from '../../interfaces/user.interface';
 
 @Controller('users')
 export class UsersController {
+  constructor(private userService: UsersService) {}
   // Can set prefix here i.e @Get(all)
   // Route can be this users/all
   // Wildcard route can be company_*
   // Route can be this users/company_a | users/company_b
-  @Get()
-  // @Header('Cache-Control', 'none')
-  getUsers(): string {
-    return 'This action returns all users';
-  }
+  // Get(1)
+  // @Get()
+  // // @Header('Cache-Control', 'none')
+  // getUsers(): string {
+  //   return 'This action returns all users';
+  // }
 
+  // Post(1)
   // @Post()
   // @HttpCode(204)
   // setUser(): string {
   //   return 'This action adds a new user';
   // }
 
+  // Post(2)
+  // @Post()
+  // setUser(@Body() userDto: UserDto) {
+  //   return 'This action adds a new user';
+  // }
+
+  // Post(3)
   @Post()
-  setUser(@Body() userDto: UserDto) {
-    return 'This action adds a new user';
+  async setUser(@Body() userDto: UserDto) {
+    this.userService.setUser(userDto)
+  }
+
+  @Get()
+  async getUsers(): Promise<User[]> {
+    return this.userService.getUsers();
   }
 
   // With redirect

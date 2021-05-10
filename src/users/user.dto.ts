@@ -1,11 +1,17 @@
 //DTO - Data Transfer Object
 // An obj defines how the data will be sent over the network
-import { IsNumberString, IsNumber } from 'class-validator';
+import { IsNumberString, IsNumber, IsString } from 'class-validator';
 
 export class UserDto {
   @IsNumber()
   id: number;
+
+  @IsString()
   name: string;
-  age: string;
+
+  @IsNumber()
+  age: number;
+
+  @IsNumber()
   nationality: string;
 }
